@@ -80,11 +80,11 @@
 	},
 	"sources": {
 		"MoneyManager.sol": {
-			"keccak256": "0xb87baf7e6e81c4440b2dbba08352a791925781f33d917658843a804dd61748c6",
+			"keccak256": "0x66387972a4a95600e76effa490b4186bd78560c5b1f14db093c0a77aa53e4ac3",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://23c7df46d21fc27f811311587436e51eebef8b7140b00081897d0389360f5885",
-				"dweb:/ipfs/QmbEzgUPFnFgh3aNzy8gXQdh4YYQSpXRX2jycpbeGC3psQ"
+				"bzz-raw://545f6e8cd8f6952dcfee4e6a39f18f822fe0c59fbe50e2a875a594b964027e50",
+				"dweb:/ipfs/QmRZksmwV42sF9urFgehE6Xq5P6dvs9Ci6JuuJBPGRD6zq"
 			]
 		}
 	},

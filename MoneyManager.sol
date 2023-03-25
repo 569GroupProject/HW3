@@ -7,6 +7,7 @@ contract MoneyManager {
 
     function receiveMoney() public payable {
         receivedAmount += msg.value;
+        timeOut = block.timestamp + 1 minutes;
     }
 
     function currentBalance() public view returns (uint) {
