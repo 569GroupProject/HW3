@@ -7,9 +7,13 @@ contract MoneyManager {
 
     event Withdrawal(address indexed recipient, uint amount);
 
+    mapping(address => uint) public deposits;
+    mapping(address => uint) public depositTimeouts;
+
     function receiveMoney() public payable {
         receivedAmount += msg.value;
-        timeOut = block.timestamp + 1 minutes;
+        deposits[msg.sender] += msg.value;
+        depositTimeouts[msg.sender] = block.timestamp + 1 minutes;
     }
 
     function currentBalance() public view returns (uint) {
@@ -17,19 +21,23 @@ contract MoneyManager {
     }
 
     function withdrawMoney() public {
-        require(block.timestamp >= timeOut, "Withdrawal not allowed yet");
+        require(block.timestamp >= depositTimeouts[msg.sender], "Withdrawal not allowed yet");
         address payable recipient = payable(msg.sender);
-        uint balance = currentBalance();
-        recipient.transfer(balance);
-        emit Withdrawal(recipient, balance);
+        uint withdrawalAmount = deposits[msg.sender];
+        require(withdrawalAmount > 0, "No balance to withdraw");
+        deposits[msg.sender] = 0;
+        recipient.transfer(withdrawalAmount);
+        emit Withdrawal(recipient, withdrawalAmount);
     }
 
     function withdrawToAddress(address payable _address) public {
-        require(block.timestamp >= timeOut, "Cannot withdraw before timeout");
-        require(address(this).balance > 0, "No balance to withdraw");
-        uint balance = currentBalance();
-        _address.transfer(balance);
-        emit Withdrawal(_address, balance);
+        require(block.timestamp >= depositTimeouts[msg.sender], "Cannot withdraw before timeout");
+        uint withdrawalAmount = deposits[msg.sender];
+        require(withdrawalAmount > 0, "No balance to withdraw");
+        deposits[msg.sender] = 0;
+        _address.transfer(withdrawalAmount);
+        emit Withdrawal(_address, withdrawalAmount);
     }
 }
+
 
